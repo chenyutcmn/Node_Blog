@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+	<link rel="stylesheet" href="/blog.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+</head>
+<body>
+	<% include nav %>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-8 blog-main">
+				<div class="blog-post">
+					<% articles.forEach(function(article){ %>
+					<div class="panel panel-default">
+						<div class="panel-heading"><span> by <!--<a href="/<%=article.author%>/home">--><%=article.author%><!--</a>--></span>
+							<div style="float: right"><%=article.date%></div>
+						</div>
+						<div class="panel-body">
+							<h3><p style="color : #42b8ca"><%= article.title %></p></h3>
+							<div class="panel-article">
+								<%- article.content %>
+							</div>
+							<div style="padding-top: 20px;text-align: right;">
+								<div style="float: left">
+									<a href="/<%=article.author%>/<%=article._id%>/detail" class="btn btn-primary">阅读更多</a>
+								</div>
+								<a >编辑</a>|
+								阅读<span class="badge-read"><%= article.read_num %></span>| 
+								<a >评论</a><span class="badge-comment"><%=article.reply_num%></span></div>
+							</div>
+						</div>
+						<% }) %>
+					</div>
+					<nav>
+					<ul class="pager">
+						<li><a href=<%- last_page %>>Last</a></li>
+						<li><a href=<%- next_page %>>Next</a></li>
+					</ul>
+				</nav>
+				</div>
+				<div class="col-sm-3 col-sm-offset-1 blog-sidebar" >
+				<div class="sidebar-module">
+					<h4>文章归档</h4>
+					<ol class="list-unstyled">
+						<% articles_group.forEach(function(item){%>
+						<li><a href=/articlesgroup/<%- item.date_for_group %>><%=item.date_for_group%></a> 
+							(<%=(item.count-1)%>)</li>
+						<%})%>
+					</ol>
+				</div>
+				<div class="sidebar-module">
+					<h4>友情链接</h4>
+					<ol class="list-unstyled">
+						
+					</ol>
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

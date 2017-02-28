@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+	<link rel="stylesheet" href="/blog.css">
+	<link rel="stylesheet" type="text/css" media="screen" href="/stylesheets/bootstrap-markdown.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+</head>
+<body>
+	<% include nav%>
+<div class="container">
+    <div class="blog-header">
+    </div>
+    <div class="row">
+        <div class=" blog-main">
+            <div class="blog-post">
+                <h5 class="blog-post-title" style="text-align: center"><%=article.title%></h5>
+                <p class="blog-post-meta"><%=article.date%> by <a href="/<%=article.author%>/home"><%=article.author%></a></p>
+                <div class="panel-article"> <%-article.content%></div>
+                <div style="padding-top: 20px;text-align: right;">
+                    <%if(user&&user.username===article.author){%>
+                        <a class="url-update" href="/article/edit/<%= article._id %>"> 编辑</a>|
+                        <a class="url-delete" href="/article/delete/<%= article._id %>">删除</a>|
+                        <%}%>
+                        阅读 <span class="badge-read"><%=article.read_num%></span>|
+                        <a href="#replyId"> 评论</a>  <span class="badge-comment"><%=article.reply_num%></span></div>
+            </div>
+        </div><!-- /.blog-main -->
+    </div><!-- /.row -->
+    <div class="list-group">
+            <%for(var i=0;i<replies.length;i++){%>
+            <div class="list-group-item row">
+                <div class="col-md-8"><%-replies[i].reply_content%></div>
+                <div class="col-md-3" style="text-align: right"><a href="/<%=replies[i].reply_author%>/home"><%=replies[i].reply_author%></a>, <%=i+1%>楼,<%=replies[i].reply_date%></div>
+                <a name="<%=replies[i]._id%>"></a>
+            </div>
+            <%}%>
+    </div>
+</div><!-- /.container -->
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading" id="replyId">
+            <h3 class="panel-title">评论区</h3>
+        </div>
+        <form action="/<%=article.author%>/<%=article._id%>/reply" method="post">
+            <textarea name="reply_content" data-provide="markdown" rows="10" class="md-input"></textarea>
+            <button type="submit" class="btn btn-lg btn-default btn-block">回复</button>
+        </form>
+     </div>
+</div>
+<script src="/jquery-1.10.2.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-markdown.js"></script>
+<script src="/js/to-markdown.js"></script>
+<script src="/js/markdown.js"></script>
+
+</body>
+</html>
